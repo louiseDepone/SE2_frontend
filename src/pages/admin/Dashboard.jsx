@@ -28,16 +28,17 @@ import closeeyes from '../../assets/closeeyes.png';
 import search from '../../assets/search.png';
 import AddUser from "../../components/forms/structuredForm/AddUser"
 export default function Dashboard() {
-  const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading}} = useAdminContext()
+  const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading,userrefetch}} = useAdminContext()
   const [filterred, setfiltered] = useState([])
   const [items, setItem] = useState([])
-
+  
   useEffect(() => {
     setfiltered(getuser?.users)
     setItem(getuser?.users)
-  },[getuser?.users]);
 
-  
+  },[userLoading]);
+
+
   
 let itemsqueryPerPage = 7
 let maxPagesShown = 3
@@ -73,7 +74,7 @@ let maxPagesShown = 3
         <div className='flex justify-between items-center space-y-4'>
           <p className='font-bold text-2xl'>User Managment</p>
           <div className='flex items-center space-x-4 '>
-            <div className='flex items-center flex h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-sm  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
+            <div className='flex items-center  h-9 w-full rounded-md border border-input bg-white px-3 py-1 text-sm  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
               <img src={search} className='w-[22px] h-[22px]' alt=""  />
               <Input placeholder="Search" onChange={(e) => {
                     if(e.target.value.trim() == ""){

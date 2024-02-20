@@ -12,6 +12,7 @@ export default function Login() {
   const authenticationOfUser = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("loggin atemmot")
     if(authenticationOfUser){
       navigate("../authenticated", {replace:true})
     }
@@ -56,7 +57,7 @@ export default function Login() {
       localStorage.setItem('token',response?.data?.token)
       navigate("../authenticated", {replace:true})
     }).catch(err => {
-      setError(err.response.data.error)
+      setError(err.response?.data.error)
     })
   }  
  return (

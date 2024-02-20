@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+const { scrollbarGutter, scrollbarWidth, scrollbarColor } = require('tailwind-scrollbar-utilities');
+
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -73,5 +76,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate")
+
+  ,  scrollbarGutter(), // no options to configure
+    scrollbarWidth(), // no options to configure
+    scrollbarColor(), // no options to configure
+  ],
 }

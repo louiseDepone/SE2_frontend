@@ -65,5 +65,5 @@ export default function useUser() {
         }
     }
 
-    return {getuser, userLoading, registerUser,deleteUser,EditUser}
+    return {getuser, userLoading, registerUser,deleteUser,EditUser, userrefetch}
 }

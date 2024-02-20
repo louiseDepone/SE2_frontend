@@ -44,7 +44,7 @@ import { useAdminContext, useRoleContext } from '@/hooks/useAllContext';
 export default function AddUser(props) {
 
   const  { roles:{getrole, roleLoading,deleterole,Editrole} } = useRoleContext()
-  const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading}} = useAdminContext()
+  const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading, userrefetch}} = useAdminContext()
 
 
 
@@ -82,7 +82,7 @@ export default function AddUser(props) {
       if(props.type === "Delete"){
         deleteUser(props.account.user_id)
       }
-
+      userrefetch()
   }
  
     

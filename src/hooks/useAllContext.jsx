@@ -19,11 +19,20 @@ export const useRoleContext = () => {
     return {roles}
 }
 
-// export const useEmployeeContext = () => {
-//     const [user, role /* list here by comma all the needed for shift manager sch as all the employees,all the role and everything! */] = useContext(AllContext)
+export const useEmployeeContext = () => {
+    const {employees} = useContext(AllContext)
 
-//     if(user === undefined){
-//         throw new Error("useEmployeeContext must be used with a AllContext");
-//     }
-//     return user
-// }
+    // if(user === undefined){
+    //     throw new Error("useEmployeeContext must be used with a AllContext");
+    // }
+    return employees
+}
+
+export const useEmployeeOnLeaveContext = () => {
+    const {employeesOnLeave} = useContext(AllContext)
+
+    // if(user === undefined){
+    //     throw new Error("useEmployeeContext must be used with a AllContext");
+    // }
+    return employeesOnLeave
+}

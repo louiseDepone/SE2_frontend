@@ -11,14 +11,16 @@ export default function ExperimentContext() {
     const navigate = useNavigate();
 
     useEffect(() => {
-      if(authenticationOfUser?.role_id == 1){
-        navigate("../authenticated/admin/dashboard", {replace: true})
+      if(authenticationOfUser?.role_name.toLowerCase() == "admin"){
+       return  navigate("../authenticated/admin/dashboard", {replace: true})
+      }
+      if(authenticationOfUser?.role_name.toLowerCase() == "schedule manager"){
+        return navigate("../authenticated/shiftManager/employee", {replace: true})
       }
     },[authenticationOfUser])
 
     const users = useUser()// the list and loadind
     const roles = userole() 
-
 
   return (
     <AllContext.Provider value={{users,authenticationOfUser,roles}}>
