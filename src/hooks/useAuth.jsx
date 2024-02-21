@@ -15,12 +15,8 @@ export default function useAuth() {
         }
         const decryptUser = async () => {
             try {
-                const responses = await axios.get('http://localhost:3000/user/decrypt', {
-                    headers: {
-                        authorization: localStorage.getItem("token")
-                    }
-                });
-                const res = await responses?.data?.userId
+                const res = localStorage.getItem("userId")
+                console.log(res)
                 const response = await axios.get(`http://localhost:3000/user/${res}`, {
                     headers: {
                         authorization: localStorage.getItem("token")

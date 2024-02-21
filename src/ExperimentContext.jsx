@@ -11,6 +11,7 @@ export default function ExperimentContext() {
     const navigate = useNavigate();
 
     useEffect(() => {
+      
       if(authenticationOfUser?.role_name.toLowerCase() == "admin"){
        return  navigate("../authenticated/admin/dashboard", {replace: true})
       }

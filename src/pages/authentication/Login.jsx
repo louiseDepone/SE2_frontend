@@ -55,6 +55,9 @@ export default function Login() {
 
     const login = await axios.post("http://localhost:3000/user/login", cred).then(response => {
       localStorage.setItem('token',response?.data?.token)
+      localStorage.setItem('userId',response?.data?.userId)
+      console.log('userId; ',response?.data?.userId)
+      console.log('red: ',cred)
       navigate("../authenticated", {replace:true})
     }).catch(err => {
       setError(err.response?.data.error)
