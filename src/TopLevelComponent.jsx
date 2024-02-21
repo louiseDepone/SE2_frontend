@@ -46,7 +46,7 @@ function TopLevelComponent() {
     <NavigationMain authenticationOfUser={authenticationOfUser}/>
 
     {authenticationOfUser?.role_name.toLowerCase() === "schedule manager" ?  <span className='flex '>
-            <aside className={`hidden  lg:block bg-white px-6 ppp sticky top-0 `} >
+            <aside className={`hidden  lg:block bg-white px-6 ppp sticky top-0 h-screen pt-5 `} >
               <Calendar
               mode="single" //8,10,11,14,17
               selected={date}

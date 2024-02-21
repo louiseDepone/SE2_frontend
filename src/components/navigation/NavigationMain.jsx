@@ -18,7 +18,7 @@ export default function NavigationMain({authenticationOfUser}) {
 let user = authenticationOfUser
 
 
-// if(!authenticationOfUser) return <></>
+if(!authenticationOfUser) return <></>
   return (
     <div  className={ user?.role_name.toLowerCase() != "schedule manager" ? "flex  items-center justify-evenly bg-white  h-16  space-x-24":"flex  items-center justify-between px-10 bg-white  h-16  space-x-24" }>
         <div className='px-6 bg-white' >LOGO</div>

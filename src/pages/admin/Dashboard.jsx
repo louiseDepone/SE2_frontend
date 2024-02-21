@@ -19,12 +19,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import profile from '../../assets/profile.png';
-import lock from '../../assets/lock.png';
-import openeyes from '../../assets/openeyes.png';
-import modifys from '../../assets/modify.svg';
-import deletes from '../../assets/delete.png';
-import closeeyes from '../../assets/closeeyes.png';
 import search from '../../assets/search.png';
 import AddUser from "../../components/forms/structuredForm/AddUser"
 export default function Dashboard() {

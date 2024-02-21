@@ -20,13 +20,13 @@ export default function useAuth() {
                         authorization: localStorage.getItem("token")
                     }
                 });
-                const res = responses?.data?.userId
+                const res = await responses?.data?.userId
                 const response = await axios.get(`http://localhost:3000/user/${res}`, {
                     headers: {
                         authorization: localStorage.getItem("token")
                     }
                 });
-                setIsTokenValid( response?.data?.result[0])          
+                setIsTokenValid(response?.data?.result[0])
             } catch (error) {
                 
                 localStorage.clear()
