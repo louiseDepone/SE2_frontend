@@ -125,8 +125,18 @@ export default function Employees() {
     const handlePrevPage = () => {
       setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
     };
-  const fileInput = (e) => {
-    console.log(e.target.value)
+  const fileInput = (event) => {
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      // The result attribute contains the raw CSV data
+      const rawCsvData = e.target.result;
+      console.log(rawCsvData);
+    };
+
+    reader.readAsText(file);
   }
   const colorring = {
     monday : " bg-[#C0DFFD] text-[#56A7F4] ",

@@ -22,8 +22,9 @@ let user = authenticationOfUser
 if(!authenticationOfUser) return <></>
   return (
     <div  className={ user?.role_name.toLowerCase() != "schedule manager" ? "flex  items-center justify-between px-24 bg-white  h-16  space-x-24":"flex  items-center justify-between px-10 bg-white  h-16  space-x-24" }>
-        <div className='px-6 bg-white' >
+        <div className='px-6 bg-white flex items-center space-x-2' >
           <img src={logo} alt=""  className='w-12' />
+          <p className='font-bold'>EaseSched</p>
         </div>
         { user?.role_name.toLowerCase() == "schedule manager"  && 
           <div className="font-medium text-sm flex h-full  items-center space-x-8">
