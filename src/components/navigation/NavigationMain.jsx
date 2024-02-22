@@ -21,7 +21,9 @@ let user = authenticationOfUser
 if(!authenticationOfUser) return <></>
   return (
     <div  className={ user?.role_name.toLowerCase() != "schedule manager" ? "flex  items-center justify-evenly bg-white  h-16  space-x-24":"flex  items-center justify-between px-10 bg-white  h-16  space-x-24" }>
-        <div className='px-6 bg-white' >LOGO</div>
+        <div className='px-6 bg-white' >
+          <img src="loo" alt="" srcset="" />
+        </div>
         { user?.role_name.toLowerCase() == "schedule manager"  && 
           <div className="font-medium text-sm flex h-full  items-center space-x-8">
             <NavLink to={"shiftManager/dashboard"} className='hover:border-solid hover:border-b-2  h-full  flex items-center justify-center hover:border-red-500'> Dashboard</NavLink>
