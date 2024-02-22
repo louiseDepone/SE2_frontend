@@ -156,13 +156,13 @@ export default function AddUser(props) {
             render={({ field }) => (
               <FormItem className=" w-1/2">
                 <FormLabel className="font-normal"> ID Number</FormLabel>
-                <div className='flex items-center flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'>
+                <div className='flex items-center  h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'>
                 <img src={num}  className='w-6' /> {/*icon*/}
                   <FormControl>
 
                     { props.type == "Delete" ? 
-                    <Input disabled placeholder="e.g 12-594" {...field} className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full "/> :
-                    <Input placeholder="e.g 12-594" {...field} className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full" />
+                    <Input disabled placeholder="e.g 12-594" {...field} className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none ring-none h-full "/> :
+                    <Input placeholder="e.g 12-594" {...field} className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none ring-none h-full" />
                     }
 
 
@@ -183,14 +183,14 @@ export default function AddUser(props) {
           render={({ field }) => (
             <FormItem className=" p-0 m-0">
               <FormLabel className="font-normal">Name</FormLabel>
-              <div className='flex items-center flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
+              <div className='flex items-center  h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
               <img src={profile} className='w-6'/> {/*icon*/}
               <FormControl>
 
               { props.type == "Delete" ?
 
-                <Input disabled placeholder="Enter Name" {...field} className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full"/> :
-                <Input placeholder="Enter Name" {...field} className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full"/>
+                <Input disabled placeholder="Enter Name" {...field} className="border-0 border-transparent ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full"/> :
+                <Input placeholder="Enter Name" {...field} className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none  ring-none h-full"/>
               }
 
               </FormControl>
@@ -205,14 +205,14 @@ export default function AddUser(props) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-normal">Password</FormLabel>
-              <div className='flex items-center flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
+              <div className='flex items-center  h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
               <img src={lock} className='w-6'/> {/*icon*/}
                 <FormControl>
 
                 {props.type == "Delete" ?
 
-                  <Input placeholder="Enter a Password" {...field} type="password" disabled className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full" /> :
-                  <Input placeholder="Enter a Password" {...field} type="password" className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full"/>}
+                  <Input placeholder="Enter a Password" {...field} type="password" disabled className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none ring-none h-full" /> :
+                  <Input placeholder="Enter a Password" {...field} type="password" className="border-0 border-transparent ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full"/>}
                 </FormControl>
               </div>
               <FormMessage />
@@ -228,7 +228,7 @@ export default function AddUser(props) {
                     <FormLabel className="font-normal">Enter the User ID number</FormLabel> :
                     <FormLabel className="font-normal">Confirm Password</FormLabel> 
                 }
-              <div className='flex items-center flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
+              <div className='flex items-center  h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 '>
               <img src={lock} className='w-6'/> {/*icon*/}
               <FormControl>
                
