@@ -138,7 +138,7 @@ export default function Employees() {
     sunday : " bg-[#E2FDC0] text-[#AEF456]  ",
   }
   return (
-    <div className=' w-full px-8 pt-9'>
+    <div className=' w-full px-8 py-9 '>
 
       {/* down here is usable component separate this */}
       <div className='flex justify-between items-center'>
@@ -215,7 +215,7 @@ export default function Employees() {
           <TableBody >
             {currentItemsquery?.map((employee, index) => {
               return (
-                <TableRow>
+                <TableRow key={employee.crewId}>
                     <TableCell className='text-center'>{index}</TableCell>
                     <TableCell >{employee.poscod}</TableCell>
                     <TableCell>{employee.crewId}</TableCell>
@@ -224,7 +224,7 @@ export default function Employees() {
                       <span className='flex space-x-2 '>
 
                           {employee.timeAvailable.split(",").map((day, index) => {
-                            return <span 
+                            return <span key={day+employee.crewId}
                             className={"text-sm flex justify-center nowrap items-center h-8 w-8 rounded-lg font-bold " + colorring[day.toLowerCase()] }>
                             { day.toLowerCase() === "thursday" || day.toLowerCase() === "sunday" ? day[0] + day[1] : day[0]}
                             </span>

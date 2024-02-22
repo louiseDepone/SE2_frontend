@@ -12,7 +12,6 @@ export default function Login() {
   const authenticationOfUser = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("loggin atemmot")
     if(authenticationOfUser){
       navigate("../authenticated", {replace:true})
     }
@@ -34,7 +33,6 @@ export default function Login() {
     }, []);
 
     const showHide = () => {
-      console.log(password.current.type)
       if (password.current.type === "password"){
           password.current.type = "text"
           eyes.current.src = closeeyes
@@ -56,8 +54,6 @@ export default function Login() {
     const login = await axios.post("http://localhost:3000/user/login", cred).then(response => {
       localStorage.setItem('token',response?.data?.token)
       localStorage.setItem('userId',response?.data?.userId)
-      console.log('userId; ',response?.data?.userId)
-      console.log('red: ',cred)
       navigate("../authenticated", {replace:true})
     }).catch(err => {
       setError(err.response?.data.error)

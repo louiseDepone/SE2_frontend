@@ -22,14 +22,23 @@ import { Input } from "@/components/ui/input"
 import search from '../../assets/search.png';
 import AddUser from "../../components/forms/structuredForm/AddUser"
 export default function Dashboard() {
-  const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading,userrefetch}} = useAdminContext()
+const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading,/*userrefetch*/}} = useAdminContext()
   const [filterred, setfiltered] = useState([])
   const [items, setItem] = useState([])
   
-  useEffect(() => {
-    setfiltered(getuser?.users)
-    setItem(getuser?.users)
-
+  useEffect(  () => {
+    const getusers = async () => {
+     try{
+        const user = await getuser()
+        return user
+      }catch(e)  {
+        console.log("error", error)
+      }
+    }
+    getusers().then(e => {
+      setfiltered(e?.users)
+      setItem(e?.users)
+    }) 
   },[userLoading]);
 
 
