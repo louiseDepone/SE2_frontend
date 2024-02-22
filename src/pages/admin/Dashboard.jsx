@@ -21,25 +21,32 @@ import {
 import { Input } from "@/components/ui/input"
 import search from '../../assets/search.png';
 import AddUser from "../../components/forms/structuredForm/AddUser"
+import axios from 'axios'
 export default function Dashboard() {
 const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading,/*userrefetch*/}} = useAdminContext()
   const [filterred, setfiltered] = useState([])
   const [items, setItem] = useState([])
   
-  useEffect(  () => {
-    const getusers = async () => {
-     try{
-        const user = await getuser()
-        return user
-      }catch(e)  {
-        console.log("error", error)
-      }
+  const getusers = async () => {
+    try{
+        
+        const del = await axios.get(`http://localhost:3000/users`, {
+            headers:{
+                authorization: localStorage.getItem("token")
+            }
+        }).then(e => {
+              setfiltered(e?.data?.users);
+              setItem(e?.data?.users);
+        })
+    }catch(err){
+        console.error(`error registering the user; `, err)
+        return err
     }
-    getusers().then(e => {
-      setfiltered(e?.users)
-      setItem(e?.users)
-    }) 
-  },[userLoading]);
+}
+  useEffect(() => {
+    getusers()
+  }, [userLoading]);
+  
 
 
   
@@ -142,6 +149,7 @@ let maxPagesShown = 3
                          <p>
                           Modify
                           </p>
+                          
                       </DialogTrigger> 
                       <DialogContent>
                         <DialogHeader>

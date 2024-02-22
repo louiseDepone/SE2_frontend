@@ -9,6 +9,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar"
 import { Profile } from './Profile'
+import logo from '../../assets/loo.png'
 
 import useAuth from '@/hooks/useAuth'
 import { NavLink } from 'react-router-dom'
@@ -20,9 +21,9 @@ let user = authenticationOfUser
 
 if(!authenticationOfUser) return <></>
   return (
-    <div  className={ user?.role_name.toLowerCase() != "schedule manager" ? "flex  items-center justify-evenly bg-white  h-16  space-x-24":"flex  items-center justify-between px-10 bg-white  h-16  space-x-24" }>
+    <div  className={ user?.role_name.toLowerCase() != "schedule manager" ? "flex  items-center justify-between px-24 bg-white  h-16  space-x-24":"flex  items-center justify-between px-10 bg-white  h-16  space-x-24" }>
         <div className='px-6 bg-white' >
-          <img src="loo" alt="" srcset="" />
+          <img src={logo} alt=""  className='w-12' />
         </div>
         { user?.role_name.toLowerCase() == "schedule manager"  && 
           <div className="font-medium text-sm flex h-full  items-center space-x-8">

@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import React from 'react'
+import React, { useRef } from 'react'
 import profile from '../../../assets/profile.png';
 import lock from '../../../assets/lock.png';
 import num from '../../../assets/num.png';
@@ -48,7 +48,7 @@ export default function AddUser(props) {
 
 
 
- 
+ const submitbttn = useRef()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: props.account && {
@@ -65,24 +65,30 @@ export default function AddUser(props) {
   })
  
   function onSubmit(values) {
+
     const adminRole = getrole?.roles.find(role => role.role_name ===values.role);
     if(props.type === "Add"){
       registerUser({ name: values.employeeName,
         id_number : values.idNumber,
         password:values.password,
         role_id : adminRole.role_id})
+        
+      }
+      if(props.type === "Modify"){
+        EditUser(props.account.user_id,{ name: values.employeeName,
+          id_number : values.idNumber,
+          password:values.password,
+          role_id : adminRole.role_id})
+        }
+        if(props.type === "Delete"){
+          deleteUser(props.account.user_id)
+        }
+        console.log("submmitter")
+        submitbttn.current.parentNode.parentNode.parentNode.classList.replace("fixed","hidden")
+        submitbttn.current.parentNode.parentNode.parentNode.previousSibling.classList.replace("fixed","hidden")
+        
+        
 
-    }
-    if(props.type === "Modify"){
-      EditUser(props.account.user_id,{ name: values.employeeName,
-        id_number : values.idNumber,
-        password:values.password,
-        role_id : adminRole.role_id})
-      }
-      if(props.type === "Delete"){
-        deleteUser(props.account.user_id)
-      }
-      userrefetch()
   }
  
     
@@ -226,11 +232,8 @@ export default function AddUser(props) {
               <img src={lock} className='w-6'/> {/*icon*/}
               <FormControl>
                
-                <Input placeholder="Confirm Password" {...field}  
-                
-                type="password" className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none outline-none ring-none h-full"/>
-                
-                
+                <Input placeholder="Confirm Password" {...field} type="password" className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none ring-none h-full"/>       
+              
               </FormControl>
               </div>
             </FormItem>
@@ -238,8 +241,8 @@ export default function AddUser(props) {
         />
         <div></div>
         {props.type == "Delete" ?
-        <Button type="submit" className="w-full py-4 bg-red-500 text-xs">{props.type}</Button>:
-        <Button type="submit"   className="w-full py-4 text-xs bg-green-500">{props.type}</Button>}
+        <Button type="submit" ref={submitbttn} className="w-full py-4 bg-red-500 text-xs">{props.type}</Button>:
+        <Button type="submit" ref={submitbttn}  className="w-full py-4 text-xs bg-green-500">{props.type}</Button>}
       </form>
     </Form>
 
