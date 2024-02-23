@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Input } from "@/components/ui/input"
 import search from "../../assets/search.png"
 import { Paperclip } from 'lucide-react'
@@ -23,71 +23,6 @@ import {
 import AddEmployee from '@/components/forms/structuredForm/AddEmployee'
 import axios from 'axios'
 import { useEmployeeContext } from '@/hooks/useAllContext'
-import { set } from 'date-fns'
-function getRandomDays(daysOfWeek) {
-  const randomDaysCount = Math.floor(Math.random() * daysOfWeek.length) + 1;
-  const shuffledDays = daysOfWeek.sort(() => Math.random() - 0.5);
-  return shuffledDays.slice(0, randomDaysCount);
-}
-
-function getRandomDate() {
-  const randomMonth = Math.floor(Math.random() * 12) + 1;
-  const randomDay = Math.floor(Math.random() * 28) + 1; // Assuming all months have 28 days for simplicity
-  const randomYear = 2023; // You can adjust the range of years as needed
-
-  return `${getMonthName(randomMonth)} ${randomDay}, ${randomYear}`;
-}
-
-function getMonthName(monthNumber) {
-  const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-  return months[monthNumber - 1];
-}
-
-function generateRandomName() {
-  const firstNames = ["Alice", "Bob", "Charlie", "David", "Emma", "Frank", "Grace", "Henry", "Ivy", "Jack"];
-  const lastNames = ["Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor"];
-
-  const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-  const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-
-  return {
-    firstName: randomFirstName,
-    lastName: randomLastName,
-    fullName: `${randomFirstName} ${randomLastName}`
-  };
-}
-
-function generateArrayOfObjects(count) {
-  const daysOfWeek = ["M", "T", "W", "Th", "F", "S", "Su"];
-  const objectsArray = [];
-
-  for (let i = 0; i < count; i++) {
-    const randomDays = getRandomDays(daysOfWeek);
-    const randomDate = getRandomDate();
-    const randomName = generateRandomName();
-
-    const newObj = {
-      poscod: "crew",
-      crewId: `21-${Math.floor(Math.random() * 100000)}`, // Random crewId
-      firstName: randomName.firstName,
-      lastName: randomName.lastName,
-      name: randomName.fullName,
-      timeAvailable: randomDays.join(','),
-      hiredDate: randomDate,
-    };
-
-    objectsArray.push(newObj);
-  }
-
-  return objectsArray;
-}
-
-// Usage example: Generate an array of 5 objects
-const arrayOfObjects = generateArrayOfObjects(30);
-
 
 
 export default function Employees() {
@@ -97,9 +32,9 @@ export default function Employees() {
     const [isLoading, setIsloadin]= useState(false)
     const [filterred, setfiltered] = useState([])
     const [items, setItem] = useState([])
+    const cvss = useRef()
       {}
     const getemployee = async () => {
-        setIsloadin(true)
         try{
             const del = await axios.get(`http://localhost:3000/employee/all`, {
                 headers:{
@@ -116,6 +51,7 @@ export default function Employees() {
             return err
         }
     }
+
     
     useEffect(() => {
       getemployee()
@@ -124,7 +60,7 @@ export default function Employees() {
     let itemsqueryPerPage = 7
     let maxPagesShown = 3
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [isSuccessful, setisSuccessful] = useState({})
     const totalPages = Math.ceil(filterred?.length / itemsqueryPerPage);
 
     const pageRange = Math.min(totalPages, maxPagesShown);
@@ -147,7 +83,27 @@ export default function Employees() {
       setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
     };
   const fileInput = (event) => {
+    
     const file = event.target.files[0];
+    if(!file.type.includes("csv")){
+   
+      cvss.current.classList.remove("hidden","animate__fadeOut")
+      setisSuccessful({
+        class:"bg-red-700",
+        display:" Unacceptable File type"
+      })
+      cvss.current.classList.add("animate__fadeIn")
+      cvss.current.classList.add("flex")
+
+      const lolsloe = setTimeout(() => {
+      cvss.current.classList.replace("animate__fadeIn","animate__fadeOut")
+      cvss.current.classList.replace("flex", "hidden")
+    },1500)
+    
+    event.target.value = null
+      return
+    }
+    event.preventDefault();
 
     const reader = new FileReader();
 
@@ -157,16 +113,32 @@ export default function Employees() {
           authorization: localStorage.getItem("token")
       }
       }).then(response => {
-        setIsloadin(true)
+        setIsloadin(true);
+        cvss.current.classList.remove("hidden","animate__fadeOut")
+        setisSuccessful({
+          class:"bg-green-700 ",
+          display:"Successfully Imported"
+        })
+        cvss.current.classList.add("animate__fadeIn")
+        cvss.current.classList.add("flex")
+
+        const lolsloe = setTimeout(() => {
+        cvss.current.classList.replace("animate__fadeIn","animate__fadeOut")
+        cvss.current.classList.replace("flex", "hidden")
+      },1000)
+        
     })}
 
     reader.onload = (e) => {
       const rawCsvData = e.target.result;
       csvquery(rawCsvData)
-      // console.log(rawCsvData)
+
     };
 
     reader.readAsText(file);
+   
+
+    event.target.value = null
   }
   const colorring = ['',
    " bg-[#C0DFFD] text-[#56A7F4] ",
@@ -179,8 +151,17 @@ export default function Employees() {
   ]
   const daysOfWeek = ["","M", "T", "W", "Th", "F", "S", "Su"];
   return (
-    <div className=' w-full px-8 py-9 '>
+    
+    <div className=' w-full px-8 py-9 '>  
+    <span  ref={cvss} className='fixed left-0 hidden  top-0 w-screen h-screen z-10 justify-center items-center text-white '>
 
+      <div className={`flex ${isSuccessful.class} bg-opacity-90 p-20 rounded-md  flex-col justify-center items-center gap-2`}>
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M53.4125 20.585L39.4125 6.585C39.0377 6.21064 38.5297 6.00025 38 6H14C12.9391 6 11.9217 6.42143 11.1716 7.17157C10.4214 7.92172 10 8.93913 10 10V28C10 28.5304 10.2107 29.0391 10.5858 29.4142C10.9609 29.7893 11.4696 30 12 30H52C52.5304 30 53.0391 29.7893 53.4142 29.4142C53.7893 29.0391 54 28.5304 54 28V22C53.9999 21.7371 53.9479 21.4768 53.8471 21.234C53.7463 20.9912 53.5986 20.7707 53.4125 20.585ZM38 22V11L49 22H38ZM12 45C12 47.75 13.795 50 16 50C16.4826 49.9892 16.958 49.8803 17.3972 49.6801C17.8364 49.4798 18.2304 49.1923 18.555 48.835C18.9235 48.4597 19.425 48.2447 19.9509 48.2364C20.4767 48.2282 20.9847 48.4275 21.3647 48.7911C21.7448 49.1547 21.9663 49.6533 21.9813 50.1791C21.9963 50.7048 21.8037 51.2153 21.445 51.6C20.7486 52.3496 19.9064 52.9492 18.9702 53.3619C18.0339 53.7746 17.0232 53.9917 16 54C11.59 54 8 49.9625 8 45C8 40.0375 11.59 36 16 36C17.0232 36.0083 18.0339 36.2254 18.9702 36.6381C19.9064 37.0508 20.7486 37.6504 21.445 38.4C21.8037 38.7847 21.9963 39.2952 21.9813 39.8209C21.9663 40.3467 21.7448 40.8453 21.3647 41.2089C20.9847 41.5725 20.4767 41.7718 19.9509 41.7636C19.425 41.7553 18.9235 41.5403 18.555 41.165C18.231 40.8069 17.8372 40.5189 17.3979 40.3185C16.9585 40.1182 16.4828 40.0098 16 40C13.795 40 12 42.25 12 45ZM37.9525 49.0775C37.8745 49.8424 37.6281 50.5806 37.2308 51.239C36.8336 51.8973 36.2954 52.4594 35.655 52.885C34.3575 53.75 32.75 54 31.2825 54C30.0007 53.9927 28.725 53.8247 27.485 53.5C26.9741 53.3571 26.5409 53.0171 26.2807 52.5549C26.0205 52.0926 25.9546 51.5459 26.0975 51.035C26.2404 50.5241 26.5804 50.0909 27.0426 49.8307C27.5049 49.5705 28.0516 49.5046 28.5625 49.6475C29.6575 49.9475 32.3 50.3225 33.45 49.5575C33.67 49.41 33.9075 49.1775 33.985 48.575C34.07 47.9075 33.805 47.55 30.79 46.6775C28.4525 46.0025 24.54 44.87 25.04 40.9C25.1183 40.1502 25.3605 39.4268 25.7493 38.781C26.1381 38.1351 26.6641 37.5826 27.29 37.1625C30.2525 35.1625 34.97 36.335 35.5 36.4725C36.0132 36.6074 36.4518 36.9407 36.7192 37.399C36.9867 37.8573 37.0612 38.4031 36.9263 38.9162C36.7913 39.4294 36.4581 39.868 35.9998 40.1355C35.5415 40.403 34.9957 40.4774 34.4825 40.3425C33.36 40.05 30.675 39.7025 29.525 40.4825C29.3747 40.5846 29.2509 40.7212 29.164 40.8807C29.077 41.0403 29.0294 41.2183 29.025 41.4C28.9975 41.625 28.9925 41.6725 29.305 41.875C29.8825 42.2475 30.9175 42.545 31.9175 42.835C34.3725 43.5425 38.5 44.75 37.9525 49.0775ZM53.8825 38.6725L48.8825 52.6725C48.7439 53.0612 48.4884 53.3974 48.1512 53.6352C47.8139 53.8729 47.4114 54.0006 46.9987 54.0006C46.5861 54.0006 46.1836 53.8729 45.8463 53.6352C45.5091 53.3974 45.2536 53.0612 45.115 52.6725L40.115 38.6725C39.9366 38.1729 39.9641 37.6229 40.1912 37.1435C40.4184 36.6641 40.8266 36.2946 41.3262 36.1162C41.8258 35.9379 42.3758 35.9653 42.8552 36.1925C43.3346 36.4196 43.7041 36.8279 43.8825 37.3275L47 46.0525L50.115 37.3275C50.2934 36.8279 50.6629 36.4196 51.1423 36.1925C51.6217 35.9653 52.1716 35.9379 52.6712 36.1162C53.1709 36.2946 53.5791 36.6641 53.8063 37.1435C54.0334 37.6229 54.0609 38.1729 53.8825 38.6725Z" fill="#4CA9FF"/>
+</svg>
+<p className='font-semibold'> {isSuccessful.display}</p>
+      </div>
+      </span>
       {/* down here is usable component separate this */}
       <div className='flex justify-between items-center'>
         <div>
@@ -226,7 +207,7 @@ export default function Employees() {
          
           <div className='flex items-center gap-4'>
 
-               <input type="file" accepts=".csv" className='w-28' onChange={fileInput}/>
+               <input type="file" accepts=".csv" className='w-28' onChangeCapture={fileInput}/>
               <Dialog>
                 <DialogTrigger className=' flex items-center gap-1 border-2 text-sm text-[#009BFF] rounded-md px-3 border-[#009BFF] h-7 '>
                 <p className='font-semibold text-xl'> + </p>
@@ -243,7 +224,7 @@ export default function Employees() {
           </div>
         </div>
         <div>
-          <Table className="mt-5 bg-white rounded-md">
+          <Table className="mt-5 bg-white rounded-md z-1">
           <TableHeader>
             <TableRow className="h-14 border-black">
                 <TableHead>CREW ID</TableHead>
@@ -258,8 +239,7 @@ export default function Employees() {
           <TableBody >
             {currentItemsquery?.map((employee, index) => {
               return (
-                <TableRow key={employee.crewId +index }>
-                    {/* <TableCell className='text-center'>{items.indexOf(employee)}</TableCell> */}
+                <TableRow key={employee.identification_number+employee+index}>
                     <TableCell>{employee.identification_number}</TableCell>
                     <TableCell >{employee.poscod}</TableCell>
                     <TableCell>{employee.person_name}</TableCell>
@@ -280,7 +260,7 @@ export default function Employees() {
                         </span>
                     </TableCell>
                     <TableCell>{employee.hired_date}</TableCell>
-                    <TableCell className="flex gap-2  ">
+                    <TableCell className="flex gap-6  ">
                     <Dialog>
                       <DialogTrigger className='flex gap-1'>
                         <span>
