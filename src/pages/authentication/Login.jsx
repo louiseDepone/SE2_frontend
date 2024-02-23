@@ -51,7 +51,7 @@ export default function Login() {
       password: formData.get('password')
     }
 
-    const login = await axios.post("http://localhost:3000/user/login", cred).then(response => {
+    const login = await axios.post("http://localhost:3000/auth/login", cred).then(response => {
       localStorage.setItem('token',response?.data?.token)
       localStorage.setItem('userId',response?.data?.userId)
       navigate("../authenticated", {replace:true})

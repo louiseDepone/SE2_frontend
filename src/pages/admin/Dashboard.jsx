@@ -30,7 +30,7 @@ const  { users:{EditUser, deleteUser, getuser, registerUser, userLoading,/*userr
   const getusers = async () => {
     try{
         
-        const del = await axios.get(`http://localhost:3000/users`, {
+        const del = await axios.get(`http://localhost:3000/user/all`, {
             headers:{
                 authorization: localStorage.getItem("token")
             }

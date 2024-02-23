@@ -8,7 +8,7 @@ export default function userole() {
         queryKey:[`getrole`,123334],
         queryFn: async () => {
             try{
-                const data = await axios.get(`http://localhost:3000/roles`,{
+                const data = await axios.get(`http://localhost:3000/role/all`,{
                     headers: {
                         authorization: localStorage.getItem(`token`)
                     }

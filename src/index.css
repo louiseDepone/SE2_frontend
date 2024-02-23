@@ -90,3 +90,14 @@ body{
     1px -1px 0 white,
     -1px 1px white;
 }
+.availability > tr{
+  border-bottom: black solid 1px ;
+  border-top: black solid 1px ;
+}
+.availability > tr > td:first-child{
+  padding: 1rem;
+  border-right: black solid 1px ;
+}
+.availability > tr > td:last-child{
+  padding-left: 1rem;
+}

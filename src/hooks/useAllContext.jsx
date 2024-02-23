@@ -14,7 +14,6 @@ export const useRoleContext = () => {
 
 export const useEmployeeContext = () => {
     const {employees} = useContext(AllContext)
-
     return employees
 }
 
