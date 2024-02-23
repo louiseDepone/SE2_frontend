@@ -106,9 +106,9 @@ export default function Employees() {
                     authorization: localStorage.getItem("token")
                 }
             }).then(e => {
-              console.log(e?.data)
                   setfiltered(e?.data);
                   setItem(e?.data);
+                  setIsloadin(false)
 
             })
         }catch(err){
@@ -157,7 +157,7 @@ export default function Employees() {
           authorization: localStorage.getItem("token")
       }
       }).then(response => {
-        console.log(response)
+        setIsloadin(true)
     })}
 
     reader.onload = (e) => {
