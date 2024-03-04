@@ -16,7 +16,7 @@ export default function ExperimentContext() {
        return  navigate("../authenticated/admin/dashboard", {replace: true})
       }
       if(authenticationOfUser?.role_name.toLowerCase() == "schedule manager" || authenticationOfUser?.role_name.toLowerCase() == "shift manager"){
-        return navigate("../authenticated/shiftManager/employee", {replace: true})
+        return navigate("../authenticated/shiftManager/employee/employeeOnLeave", {replace: true})
       }
     },[authenticationOfUser])
 
