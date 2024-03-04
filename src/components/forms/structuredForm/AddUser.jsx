@@ -24,6 +24,31 @@ import num from "../../../assets/num.png";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+  const passwordValidationRules = [
+    (value) => ({
+      message: "At least 8 characters",
+      status: value.length >= 8,
+    }),
+    (value) => ({
+      message: "At most 15 characters",
+      status: value.length <= 15,
+    }),
+    (value) => ({
+      message: "At least one lowercase letter",
+      status: /[a-z]/.test(value),
+    }),
+    (value) => ({
+      message: "At least one uppercase letter",
+      status: /[A-Z]/.test(value),
+    }),
+    (value) => ({ message: "At least one digit", status: /\d/.test(value) }),
+    (value) => ({
+      message: "At least one special character",
+      status: /[@$!%*?&]/.test(value),
+    }),
+  ];
+
 const strongPasswordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
 
@@ -46,8 +71,22 @@ const formSchema = z
           "Invalid employee name. Please provide both first name and last name.",
       }
     ),
-    role: z.string().min(2).max(50),
-    password: z.string().min(2).max(50),
+    role: z.string()
+    .refine((value) => ['Shift Manager', 'Admin'].includes(value), {
+      message: 'Role must be either "shift manager" or "admin".',
+    })
+    .refine((value) => value.trim().length > 0, {
+      message: 'Role is required.',
+    }),
+    password: z.string().refine(
+      (value) => {
+        return passwordValidationRules.every((rule) => rule(value).status);
+      },
+      {
+        message:
+          "Password must be 8 to 15 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&).",
+      }
+    ),
     confirmPassword: z.string().min(2).max(50),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -117,32 +156,12 @@ export default function AddUser(props) {
     }
   );
 
-  const passwordValidationRules = [
-    (value) => ({
-      message: "At least 8 characters",
-      status: value.length >= 8,
-    }),
-    (value) => ({
-      message: "At most 15 characters",
-      status: value.length <= 15,
-    }),
-    (value) => ({
-      message: "At least one lowercase letter",
-      status: /[a-z]/.test(value),
-    }),
-    (value) => ({
-      message: "At least one uppercase letter",
-      status: /[A-Z]/.test(value),
-    }),
-    (value) => ({ message: "At least one digit", status: /\d/.test(value) }),
-    (value) => ({
-      message: "At least one special character",
-      status: /[@$!%*?&]/.test(value),
-    }),
-  ];
+
 
   const [disable, setdisable] = useState(true);
-  const [valid, setvalid] = useState();
+  const [valid, setvalid] = useState(
+    passwordValidationRules.map((rule) => rule(fields.password))
+  );
   useEffect(() => {
     setdisable(
       JSON.stringify(fields) === JSON.stringify(form.formState.defaultValues)
@@ -376,7 +395,7 @@ export default function AddUser(props) {
                   );
                 })}
               </div>
-              <FormMessage />
+              {/* <FormMessage /> */}
             </FormItem>
           )}
         />

@@ -79,7 +79,7 @@ export default function AddEmployee(props) {
  
   function onSubmit(values) {
 
-    const adminRole = getrole?.roles.find(role => role.role_name ===values.role);
+    const adminRole = getrole?.roles.find(role => role.role_name === values.role);
     if(props.type === "Add"){
       registerUser({ name: values.employeeName,
         id_number : values.idNumber,
@@ -126,7 +126,7 @@ export default function AddEmployee(props) {
             render={({ field }) => (
               <FormItem>
                 <div className='flex border-gray-300 border-b justify-between items-center '>
-                <FormLabel className="font-semibold text-nowrap "> ID Number</FormLabel>
+                <FormLabel className="font-semibold text-nowrap "> Name</FormLabel>
                   <FormControl className="w-[75%]">
                     { props.type == "Delete" ? 
                     <Input disabled placeholder="Crew Full Name" className="border-0 border-transparent outline-none ring-0 ring-opacity-0 focus-visible:ring-0 shadow-none border-none ring-none h-full "/> :
